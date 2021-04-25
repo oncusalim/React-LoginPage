@@ -1,9 +1,9 @@
 import React from 'react'
 import { Button, TextField, Grid, Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { useFormik } from 'formik';
+import { Formik, useFormik } from 'formik';
 import firebase from '../firebase/firebase.utils'
-console.log("firebase", firebase)
+import * as Yup from 'yup';
 
 const styles = makeStyles({
     wrapper: {
@@ -15,16 +15,26 @@ function Signup() {
 
     const signupStyles = styles();
 
+    const SignUpSchema = Yup.object().shape({
+        displayName: Yup.string().required('Required'),
+        email: Yup.string().email('Invalid Email').required('Required'),
+        password: Yup.string()
+            .min(6, 'Too Short!')
+            .max(50, 'Too Long!')
+            .required('Required')
+
+    })
+
     const formik = useFormik({
         initialValues: {
             displayName:'',
             email: '',
             password:'',
         },
+        validationSchema: SignUpSchema,
         onSubmit: values => {
          // alert(JSON.stringify(values, null, 2));
-            firebase.register(values.email, values.password)
-
+            firebase.register(values.displayName, values.email, values.password)
         },
       });
 
@@ -36,7 +46,7 @@ function Signup() {
         
         <div style={{ padding: 20 }}>
             <Container maxWidth="sm" className={signupStyles.wrapper}>
-                <form onSubmit={formik.handleSubmit}>
+                <form onSubmit={formik.handleSubmit} validationSchema={SignUpSchema}>
            <Grid container spacing={6}>
             <Grid container item xs={12} spacing={3}>
              <TextField 
@@ -46,6 +56,8 @@ function Signup() {
                 fullWidth
                 value={formik.values.displayName}
                 onChange={formik.handleChange}
+                error={formik.errors.displayName}
+                helperText={formik.errors.displayName}
                 />
              </Grid>
              <Grid container item xs={12} spacing={3}>
@@ -56,6 +68,8 @@ function Signup() {
                 fullWidth
                 value={formik.values.email}
                 onChange={formik.handleChange}
+                error={formik.errors.email}
+                helperText={formik.errors.email}
                 />
              </Grid>
              <Grid container item xs={12} spacing={3}>
@@ -67,6 +81,8 @@ function Signup() {
                 fullWidth
                 value={formik.values.password}
                 onChange={formik.handleChange}
+                error={formik.errors.password}
+                helperText={formik.errors.password}
                 />
              </Grid>
              <Grid container item xs={12} spacing={3}>

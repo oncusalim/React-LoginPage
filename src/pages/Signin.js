@@ -3,7 +3,8 @@ import { Button, TextField, Grid, Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import firebase from '../firebase/firebase.utils'
 import { Formik } from 'formik';
-
+import * as Yup from 'yup';
+ 
 
 
 const styles = makeStyles({
@@ -19,8 +20,17 @@ function Signin() {
         email: '',
         password:'',
     }
+    const SigninSchema = Yup.object().shape({
+        email: Yup.string().email('Invalid Email').required('Required'),
+        password: Yup.string()
+            .min(6, 'Too Short!')
+            .max(50, 'Too Long!')
+            .required('Required')
+
+    })
     const handleFormSubmit = (values) =>{
-        alert(JSON.stringify(values, null, 2));
+        //alert(JSON.stringify(values, null, 2));
+        firebase.signin(values.email, values.password)
     }
    
 
@@ -35,6 +45,7 @@ function Signin() {
                
                 <Formik 
                     initialValues={initialValues}
+                    validationSchema={SigninSchema}
                     onSubmit={handleFormSubmit}
                 >
                     {({
@@ -58,6 +69,8 @@ function Signin() {
                 fullWidth
                 value={values.email}
                 onChange={handleChange}
+                error={errors.email}
+                helperText={errors.email}
                 />
              </Grid>
              <Grid container item xs={12} spacing={3}>
@@ -69,10 +82,12 @@ function Signin() {
                 fullWidth
                 value={values.password}
                 onChange={handleChange}
+                error={errors.password}
+                helperText={errors.password}
                 />
              </Grid>
              <Grid container item xs={12} spacing={3}>
-            <Button variant="contained" color="primary" fullWidth type="submit">Register</Button>
+            <Button variant="contained" color="primary" fullWidth type="submit">Login</Button>
             </Grid>
             <Grid container item xs={12} spacing={3}>
             <Button variant="contained" color="primary" fullWidth onClick={handleGoogleButtonClick}>SignUp With Google</Button>

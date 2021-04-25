@@ -2,6 +2,7 @@ import Signin from '../pages/Signin'
 import Signup from '../pages/Signup'
 import Navbar from '../components/Navbar'
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
+
 function AppRouter() {
 
   return (
