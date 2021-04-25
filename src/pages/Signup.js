@@ -1,15 +1,25 @@
 import React from 'react'
-import { Button, TextField, Grid, Container } from '@material-ui/core';
+import { Button, TextField, Grid, Container, Avatar, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Formik, useFormik } from 'formik';
 import firebase from '../firebase/firebase.utils'
 import * as Yup from 'yup';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
-const styles = makeStyles({
+const styles = makeStyles((theme)=>({
     wrapper: {
         marginTop: "5rem",
+        textAlign: "center"
     },
-});
+    avatar: {
+        margin: "1rem auto",
+        backgroundColor: theme.palette.secondary.main
+    },
+    header:{
+        margin: "1rem auto",
+        
+    }
+}));
 
 function Signup() {
 
@@ -46,6 +56,12 @@ function Signup() {
 
         <div style={{ padding: 20 }}>
             <Container maxWidth="sm" className={signupStyles.wrapper}>
+            <Avatar className={signupStyles.avatar}>
+                    <LockOutlinedIcon />
+                </Avatar>
+                <Typography variant="h4" className={signupStyles.header}>
+                       Sign Up
+                </Typography>
                 <form onSubmit={formik.handleSubmit} validationSchema={SignUpSchema}>
                     <Grid container spacing={6}>
                         <Grid container item xs={12} spacing={3}>
