@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { Button, TextField, Grid, Container, Avatar } from '@material-ui/core';
+import { Button, TextField, Grid, Container, Avatar, capitalize } from '@material-ui/core';
 import { makeStyles} from '@material-ui/core/styles';
 import axios from 'axios'
 import MediaCard from '../components/MediaCard'
@@ -43,16 +43,21 @@ function Main() {
     }, [])
     return (
         <Container className={mainStyle.wrapper}>
+             <Grid container spacing={1}>
             {data?.map((data)=>{
                 return(
+                    <Grid item sm={4} xs={6} key={data?.id}>
                     <MediaCard 
                         userImage={data?.picture}
-                        userName ={`${data?.title} ${data?.firstName} ${data?.lastName}`}
+                        userName ={`${capitalize(data?.title)} ${data?.firstName} ${data?.lastName}`}
                         userEmail={data?.email}
+                        id = {data?.id}
                         
                         />
+                        </Grid>
                 )
             })}
+            </Grid>
        </Container>
     )
 }
