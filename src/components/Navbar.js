@@ -1,4 +1,4 @@
-import React,{useContext, useCallback, useMemo} from 'react';
+import React, { useContext, useCallback, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -8,8 +8,9 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import {FirebaseAuthContext} from '../context/AuthContext'
+import { FirebaseAuthContext } from '../context/AuthContext'
 import firebase from '../firebase/firebase.utils'
+import SvgIcon from '@material-ui/core/SvgIcon';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,8 +25,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Navbar() {
-  
-  const {currentUser} = useContext(FirebaseAuthContext)
+
+  const { currentUser } = useContext(FirebaseAuthContext)
 
   const classes = useStyles();
   const [auth, setAuth] = React.useState(true);
@@ -39,18 +40,21 @@ export default function Navbar() {
 
   const handleClose = useCallback(() => {
     setAnchorEl(null);
-  },[]);
+  }, []);
   const handleSignOut = useCallback(() => {
-     firebase.signOut();
-  },[]);
+    firebase.signOut();
+  }, []);
 
   return (
     <div className={classes.root}>
-     
+
       <AppBar position="static">
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
+           
+            <SvgIcon fontSize="large">
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+            </SvgIcon>
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             Photos
@@ -64,7 +68,7 @@ export default function Navbar() {
                 onClick={handleMenu}
                 color="inherit"
               >
-                  {currentUser?.displayName}
+                {currentUser?.displayName}
                 <AccountCircle />
               </IconButton>
               <Menu
