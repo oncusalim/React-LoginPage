@@ -1,6 +1,7 @@
 import firebase from "firebase/app"
 import "firebase/auth"
 
+
 const devConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
     authDomain: process.env.REACT_APP_AUTH_DOMAIN,
@@ -14,6 +15,7 @@ const devConfig = {
  
 const prodConfig ={}
 const config = process.env.NODE_ENV === "development" ? devConfig : prodConfig; 
+
 
 class Firebase {
     constructor(){
@@ -40,12 +42,21 @@ class Firebase {
         this.firebaseAuth.signInWithPopup(googleProvider)
     }
 
-    signin(email, password) {
-        this.firebaseAuth.signInWithEmailAndPassword(email, password);
+    async signin(email, password) {
+        try{
+        await this.firebaseAuth.signInWithEmailAndPassword(email, password);
+        //window.location.href = "/";
+        }
+        catch(err){
+            console.log("firebase error", err)
+        }
     }
 
     signOut(){
         this.firebaseAuth.signOut();
+    }
+    forgotPassword(email){
+        this.firebaseAuth.sendPasswordResetEmail(email)
     }
 }
 

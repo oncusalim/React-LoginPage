@@ -11,6 +11,7 @@ import Menu from '@material-ui/core/Menu';
 import { FirebaseAuthContext } from '../context/AuthContext'
 import firebase from '../firebase/firebase.utils'
 import SvgIcon from '@material-ui/core/SvgIcon';
+import {useHistory} from "react-router-dom"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Navbar() {
 
   const { currentUser } = useContext(FirebaseAuthContext)
-
+  const history = useHistory();
   const classes = useStyles();
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -52,12 +53,12 @@ export default function Navbar() {
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
            
-            <SvgIcon fontSize="large">
+            <SvgIcon fontSize="large" onClick={()=>history.push("/")}>
               <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
             </SvgIcon>
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Photos
+           MyAPP
           </Typography>
           {currentUser && (
             <div>

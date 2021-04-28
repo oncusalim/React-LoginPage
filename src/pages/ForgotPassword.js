@@ -24,45 +24,37 @@ const styles = makeStyles((theme)=>({
     }
 }));
 
-function Signin() {
+function ForgotPassword() {
 
     const history = useHistory();
-    const signinStyles = styles();
+    const forgotPasswordStyles = styles();
     const initialValues = {
         email: '',
         password: '',
     }
-    const SigninSchema = Yup.object().shape({
+    const forgotPasswordSchema = Yup.object().shape({
         email: Yup.string().email('Invalid Email').required('Required'),
-        password: Yup.string()
-            .min(6, 'Too Short!')
-            .max(50, 'Too Long!')
-            .required('Required')
-
+       
     })
     const handleFormSubmit = (values) => {
         //alert(JSON.stringify(values, null, 2));
-        firebase.signin(values.email, values.password)
-    }
-
-
-    const handleGoogleButtonClick = () => {
-        firebase.useGoogleProvider();
+        firebase.forgotPassword(values.email)
+        history.push("/login")
     }
 
     return (
 
         <div style={{ padding: 20 }}>
-            <Container maxWidth="sm" className={signinStyles.wrapper}>
-                <Avatar className={signinStyles.avatar}>
+            <Container maxWidth="sm" className={forgotPasswordStyles.wrapper}>
+                <Avatar className={forgotPasswordStyles.avatar}>
                     <LockOutlinedIcon />
                 </Avatar>
-                <Typography variant="h4" className={signinStyles.header}>
-                       Signin
+                <Typography variant="h4" className={forgotPasswordStyles.header}>
+                       Forgot Password
                 </Typography>
                 <Formik
                     initialValues={initialValues}
-                    validationSchema={SigninSchema}
+                    validationSchema={forgotPasswordSchema}
                     onSubmit={handleFormSubmit}
                 >
                     {({
@@ -90,28 +82,11 @@ function Signin() {
                                         helperText={errors.email}
                                     />
                                 </Grid>
+                                
                                 <Grid container item xs={12} spacing={3}>
-                                    <TextField
-                                        name="password"
-                                        label="Password"
-                                        variant="outlined"
-                                        type="password"
-                                        fullWidth
-                                        value={values.password}
-                                        onChange={handleChange}
-                                        error={errors.password}
-                                        helperText={errors.password}
-                                    />
+                                    <Button variant="contained" color="primary" fullWidth type="submit">Submit</Button>
                                 </Grid>
-                                <Grid container item xs={12} spacing={3}>
-                                    <Button variant="contained" color="primary" fullWidth type="submit">Login</Button>
-                                </Grid>
-                                <Grid container item xs={12} spacing={3}>
-                                    <Button variant="contained" color="primary" fullWidth onClick={handleGoogleButtonClick}>SignUp With Google</Button>
-                                </Grid>
-                                <Grid container item xs={12} spacing={3}>
-                                    <Button variant="contained" color="primary" fullWidth onClick={()=>history.push("/forgot-password")}>Forgot Password</Button>
-                                </Grid>
+                                
                             </Grid>
                         </form>
                     )}
@@ -121,5 +96,5 @@ function Signin() {
     )
 }
 
-export default Signin
+export default ForgotPassword
 
