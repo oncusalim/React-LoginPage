@@ -5,12 +5,15 @@ import { FetchData } from '../helper/FetchData'
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { DateConvert } from '../helper/DateConvert'
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 const stylesFunc = makeStyles((theme) => ({
     wrapper: {
         marginTop: "10rem",
-        textAlign: 'flex-start',
-        direction: 'row'
+        textAlign: "center",
+        direction: 'row',
+        
     },
     avatar: {
         margin: "1rem auto",
@@ -37,6 +40,7 @@ function UserDetail() {
     console.log(data)
     return (
         <Container className={detailStyle.wrapper}  bgcolor="primary.main">
+              { !data ? (<CircularProgress /> ) : null }
             {data?.registerDate && (
                 <Grid
                     container
