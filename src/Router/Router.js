@@ -1,5 +1,6 @@
 import {useContext} from 'react'
 import Signin from '../pages/Signin'
+import SharePost from '../pages/SharePost'
 import Main from '../pages/Main'
 import Signup from '../pages/Signup'
 import ForgotPassword from '../pages/ForgotPassword'
@@ -18,6 +19,7 @@ const { currentUser} = useContext(FirebaseAuthContext)
           <Route exact path = "/login" component={Signin}/>
           <Route exact path = "/forgot-password" component={ForgotPassword}/>
           <Route exact path = "/user/:id" component={currentUser ? UserDetail: Signin}/>
+          <Route exact path = "/post/:id" component={currentUser ? SharePost: Signin}/>
           <Route path = "/" component={Main}/>
       </Switch>
      

@@ -13,10 +13,11 @@ import PropTypes from 'prop-types'
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 400,
+    maxWidth: 300,
   },
   media: {
-    height: 140,
+    height: 400,
+    width: 300
   },
 });
 
@@ -25,7 +26,7 @@ export default function MediaCard(props) {
   const history = useHistory();
   return (
     <Card className={classes.root}>
-      <CardActionArea onClick={()=>history.push(`/user/${props.id}`)}>
+      <CardActionArea onClick={() => history.push(`/user/${props.id}`)}>
         <CardMedia
           className={classes.media}
           image={props.userImage}
@@ -33,15 +34,15 @@ export default function MediaCard(props) {
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-          {props.userName}
+            {props.userName}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-          {props.userEmail}
+            {props.userEmail}
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" onClick={() => history.push(`/post/${props.id}`)} >
           Share
         </Button>
         <Button size="small" color="primary">
@@ -54,8 +55,8 @@ export default function MediaCard(props) {
 
 
 MediaCard.propTypes = {
- id : PropTypes.string.isRequired,
- userImage: PropTypes.string,
- userName: PropTypes.string,
- userEmail: PropTypes.string
+  id: PropTypes.string.isRequired,
+  userImage: PropTypes.string,
+  userName: PropTypes.string,
+  userEmail: PropTypes.string
 }
