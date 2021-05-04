@@ -56,7 +56,7 @@ class Firebase {
     signOut(){
         this.firebaseAuth.signOut();
     }
-    forgotPassword(email){
+    async forgotPassword(email){
         try {
             await this.firebaseAuth.sendPasswordResetEmail(email);
             window.location.href = "/";
